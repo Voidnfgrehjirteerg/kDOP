@@ -92,7 +92,8 @@ local function postWebhook(url, data)
 	local success, statusCode, body = safeReq(url, data)
 
 	if success then
-		print("[Darkrai Y | Webhook Services]: Webhook Request Sent")
+		
+		--print("[Darkrai Y | Webhook Services]: Webhook Request Sent")
 	else
 		if DYWebhookServices.ErrorPrinting then
 			warn("[Darkrai Y | Webhook Services]: Webhook Request Failed. Trying Proxy Urls")
@@ -100,7 +101,7 @@ local function postWebhook(url, data)
 		local success, statusCode, body = safeReq(ProxyURL, data)
 
 		if success then
-			print("[Darkrai Y | Webhook Services]: Webhook Request Sent")
+			--print("[Darkrai Y | Webhook Services]: Webhook Request Sent")
 		else
 			if DYWebhookServices.ErrorPrinting then
 				warn("[Darkrai Y | Webhook Services]: Webhook Request Failed. Trying Backup URL")
@@ -109,7 +110,7 @@ local function postWebhook(url, data)
 			success, statusCode, body = safeReq(BackupProxyURL, data)
 
 			if success then
-				print("[Darkrai Y | Webhook Services]: Backup Request Sent")
+				--print("[Darkrai Y | Webhook Services]: Backup Request Sent")
 			else
 				if DYWebhookServices.ErrorPrinting then
 					warn("[Darkrai Y | Webhook Services]: Backup Webhook Request Failed. Trying Last URL")
@@ -117,7 +118,7 @@ local function postWebhook(url, data)
 				success, statusCode, body = safeReq(LastProxyURL, data)
 				
 				if success then
-					print("[Darkrai Y | Webhook Services]: Last Request Send")
+					--print("[Darkrai Y | Webhook Services]: Last Request Send")
 				else
 					if DYWebhookServices.ErrorPrinting then
 						warn("[Darkrai Y | Webhook Services]: Backup Request Failed")
@@ -353,7 +354,7 @@ local function processQueue()
 		local success, statusCode, body, headers = pcall(DYWebhookServices.Send, DYWebhookServices, data)
 
 		if success then
-			print("[Darkrai Y | Webhook Services]: Webhook Request Sent")
+			--print("[Darkrai Y | Webhook Services]: Webhook Request Sent")
 		else
 			local retryAfter = 60
 			if headers["Retry-After"] then
@@ -361,7 +362,7 @@ local function processQueue()
 			end
 			if statusCode == 429 then
 				-- Ratelimit encountered
-				print("[Darkrai Y | Webhook Services]: Hit ratelimit. Waiting for " .. retryAfter .. " seconds...")
+				--print("[Darkrai Y | Webhook Services]: Hit ratelimit. Waiting for " .. retryAfter .. " seconds...")
 			else
 				-- Other error occurred
 				if DYWebhookServices.ErrorPrinting then
